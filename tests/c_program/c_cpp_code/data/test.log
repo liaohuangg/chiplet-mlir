@@ -1,0 +1,14 @@
+==102679== Callgrind, a call-graph generating cache profiler
+==102679== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==102679== Using Valgrind-3.26.0.GIT and LibVEX; rerun with -h for copyright info
+==102679== Command: ./deal_m
+==102679== 
+==102679== For interactive control, run 'callgrind_control -h'.
+==102679== brk segment overflow in thread #1: can't grow to 0x4849000
+==102679== (see section Limitations in user manual)
+==102679== NOTE: further instances of this message will not be shown
+==102679== 
+==102679== Events    : Ir
+==102679== Collected : 76222391624
+==102679== 
+==102679== I   refs:      76,222,391,624
