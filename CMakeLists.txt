@@ -38,11 +38,22 @@ set(LLVM_LIBRARY_DIRS "${LLVM_INSTALL_DIR}/lib")
 message(LLVM_INCLUDE_DIRS: ${LLVM_INCLUDE_DIRS})
 message(LLVM_LIBRARY_DIRS: ${LLVM_LIBRARY_DIRS})
 
+# Torch-MLIR paths
+set(TORCH_MLIR_DIR "/root/workspace/ide_python/tool/torch-mlir")
+set(TORCH_MLIR_BUILD_DIR "${TORCH_MLIR_DIR}/build")
+set(TORCH_MLIR_INCLUDE_DIR "${TORCH_MLIR_DIR}/include")
+set(TORCH_MLIR_LIB_DIR "${TORCH_MLIR_BUILD_DIR}/lib")
+message(STATUS "Torch-MLIR include: ${TORCH_MLIR_INCLUDE_DIR}")
+message(STATUS "Torch-MLIR lib: ${TORCH_MLIR_LIB_DIR}")
+
 link_directories(${LLVM_LIBRARY_DIRS})
+link_directories(${TORCH_MLIR_LIB_DIR})
 
 include_directories(${LLVM_INCLUDE_DIRS})
 include_directories(${MLIR_INCLUDE_DIRS})
 include_directories(${CLANG_INCLUDE_DIRS})
+include_directories(${TORCH_MLIR_INCLUDE_DIR})
+include_directories("${TORCH_MLIR_BUILD_DIR}/include")
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 include_directories("${PROJECT_BINARY_DIR}/include")

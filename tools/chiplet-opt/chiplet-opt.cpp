@@ -41,6 +41,9 @@
 #include "chiplet/Dialect/CHIPLET/IR/stablehlo/dialect/StablehloOps.h"
 #include "chiplet/Dialect/CHIPLET/IR/stablehlo/dialect/Register.h"
 
+// Torch-MLIR Dialects
+#include "torch-mlir/InitAll.h"
+
 
 int main(int argc, char **argv) {
   // mlir::registerAllDialects();
@@ -80,6 +83,14 @@ int main(int argc, char **argv) {
   registry.insert<cir::CIRDialect>();
   registry.insert<mlir::CHIPLET::CHIPLETDialect>();
   registry.insert<mlir::stablehlo::StablehloDialect>();
+  
+  // Register Torch-MLIR dialects
+  mlir::torch::registerAllDialects(registry);
+  // Note: registerAllExtensions requires MLIRFuncTransforms to be linked correctly
+  // Temporarily commented out to resolve linking issues
+  // mlir::torch::registerAllExtensions(registry);
+  mlir::torch::registerOptionalInputDialects(registry);
+  
   // ----- My Dialect -----
   mlir::CHIPLET::registerChipletDSEPass();
 

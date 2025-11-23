@@ -90,6 +90,10 @@ set(LIBS
   VhloOps
   StablehloTypeInference
   StablehloAssemblyFormat
+
+  # Torch-MLIR Dialects and dependencies
+  # Note: Use target names if available, otherwise use full paths
+  # The order matters - dialect implementations before InitAll
 )
 
 set(SOURCES
@@ -100,6 +104,22 @@ add_llvm_executable(chiplet-opt ${SOURCES})
 
 # llvm_update_compile_flags(cgra-opt)
 target_link_libraries(chiplet-opt PRIVATE ${LIBS})
+
+# Link Torch-MLIR libraries with absolute paths
+# Use --whole-archive for dialect libraries to ensure TypeIDResolver symbols are included
+# Order matters: dialect implementations must come before InitAll
+target_link_options(chiplet-opt PRIVATE
+  -Wl,--whole-archive
+  ${TORCH_MLIR_LIB_DIR}/libTorchMLIRTorchDialect.a
+  ${TORCH_MLIR_LIB_DIR}/libTorchMLIRTorchConversionDialect.a
+  ${TORCH_MLIR_LIB_DIR}/libTorchMLIRTMTensorDialect.a
+  -Wl,--no-whole-archive
+)
+target_link_libraries(chiplet-opt PRIVATE
+  ${TORCH_MLIR_LIB_DIR}/libTorchMLIRTorchUtils.a
+  ${TORCH_MLIR_LIB_DIR}/libTorchMLIRConversionUtils.a
+  ${TORCH_MLIR_LIB_DIR}/libTorchMLIRInitAll.a
+)
 # clang_target_link_libraries(chiplet-opt
 #   PRIVATE
 #   # cir Dialect

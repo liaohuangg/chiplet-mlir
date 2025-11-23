@@ -22,9 +22,6 @@ cd torch-mlir
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt -r torchvision-requirements.txt
 
-pip install pre-commit
-pre-commit install
-
 cmake -GNinja -Bbuild \
   -DCMAKE_BUILD_TYPE=Release \
   -DLLVM_ENABLE_ASSERTIONS=ON \
@@ -85,4 +82,19 @@ ninja install
 cd chiplet-mlir
 cd build_tools
 ./build_chipletopt.sh
+```
+
+## 4. 测试导出torch ir数据流
+```
+cd chiplet-mlir/tests/ml_model/model
+python pretrain.py # 注意修改生成路径
+#  可以看到生成chiplet-mlir/tests/ml_model/model/multi_dnn_outputs/Moe_torch.mlir
+```
+
+## 5. 测试chiplet-mlir读入Moe_torch.mlir文件
+```
+cd chiplet-mlir/tests/ml_model/model
+python pretrain.py # 注意修改生成路径
+#  可以看到生成chiplet-mlir/tests/ml_model/model/multi_dnn_outputs/Moe_torch.mlir
+./chiplet-mlir/tests/run.sh
 ```
